@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -16,13 +17,23 @@ func main() {
 		"https://cnn.com",
 		"https://netflix.com",
 	}
-	
+
+	var wg sync.WaitGroup
 	for _, url := range urls {
-		go check(url)
+		// increment waitgroup counter
+		wg.Add(1)
+
+		go func(url string) {
+			//decrement waitgroup counter
+			defer wg.Done()
+			check(url)
+		}(url)
 	}
+	// wait for all goroutines to complete
+	wg.Wait()
 
 	elapsed := time.Since(start)
-	log.Printf("check took %v", elapsed) //19.6841258s
+	log.Printf("check took %v", elapsed) // 3.9252245s; approx 50% decrease in wait time
 }
 
 // check is a functions that pings a website to determine if is up or down

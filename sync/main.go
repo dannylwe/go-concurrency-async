@@ -22,7 +22,7 @@ func main() {
 	}
 
 	elapsed := time.Since(start)
-	log.Printf("check took %v", elapsed) //19.6841258s
+	log.Printf("check took %v", elapsed) //6.9493975s
 }
 
 // check is a functions that pings a website to determine if is up or down
