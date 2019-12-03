@@ -16,9 +16,9 @@ func main() {
 		"https://cnn.com",
 		"https://netflix.com",
 	}
-
+	
 	for _, url := range urls {
-		check(url)
+		go check(url)
 	}
 
 	elapsed := time.Since(start)
